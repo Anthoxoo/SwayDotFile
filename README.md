@@ -27,7 +27,7 @@ sudo pacman -S sway waybar rofi-wayland mako kitty nwg-bar fortune-mod swayidle 
 1 - Clone the repository:
 
 ``` shell
-git clone --depth 1 https://github.com/arkboix/sway.git 
+git clone --depth 1 https://github.com/Anthoxoo/SwayDotFile.git
 ```
 2- Remove existing config if they exist
 ``` shell
