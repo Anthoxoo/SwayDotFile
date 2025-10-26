@@ -4,9 +4,9 @@
     "height": 30,
     "spacing": 1,
     "margin": 0,
-    "modules-left": ["sway/workspaces", "sway/mode", "custom/weather", "custom/quote"],
+    "modules-left": ["sway/workspaces", "sway/mode", "custom/weather"],
         "modules-center": [],                                                                           //battery   //disk     // uptime      //updates        // systray
-    "modules-right": ["clock","pulseaudio", "backlight", "network", "cpu", "memory", "temperature", "battery", "disk", "custom/uptime", "custom/updates", "tray"],
+    "modules-right": ["clock","pulseaudio", "backlight", "cpu", "memory", "battery","network", "custom/uptime", "custom/updates", "tray"],
 
 
     "sway/workspaces": {
@@ -125,13 +125,6 @@
         "on-click": "kitty -e htop"
     },
 
-    "temperature": {
-        "critical-threshold": 80,
-        "format": "{icon} {temperatureC}°C",
-        "format-icons": ["󱃃", "󰔏", "󱃂"],
-        "on-click": "kitty -e s-tui"
-    },
-
     "battery": {
         "states": {
             "good": 95,
@@ -179,14 +172,8 @@
         "format": "{icon} {percent}%",
         "format-icons": ["󰃞", "󰃟", "󰃠"],
         "on-scroll-up": "brightnessctl set +5%",
-        "on-scroll-down": "brightnessctl set 5%-"
-    },
-
-    "disk": {
-        "interval": 30,
-        "format": "󰋊 {percentage_used}%",
-        "path": "/",
-        "on-click": "kitty -e gdu /"
+        "on-scroll-down": "brightnessctl set 5%-",
+	"on-click": "kitty -e ~/BrightnessGui/start.sh&"
     },
 
     "tray": {
