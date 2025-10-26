@@ -1,8 +1,8 @@
-<h1>✨ MY SWAY DOTFILE ✨</h1>
+<h1>MY SWAY DOTFILE</h1>
 
 These are my SwayWM Configuration files. Forked from the amazing work of Arkboix ! I use these with CachyOS, but it is compatible with any Arch based distrubution.
 
-## 🥭 Notable Features 🥭
+## Notable Features
 
 - Rofi app launcher
 - Simple designs
