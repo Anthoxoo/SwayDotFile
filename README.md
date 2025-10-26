@@ -1,17 +1,14 @@
-<h1>✨ ARKBOI'S SWAY ✨</h1>
+<h1>✨ MY SWAY DOTFILE ✨</h1>
 
-These are my SwayWM Configuration files. I use these with Arco Linux, but it is compatible with any Arch based distrubution.
+These are my SwayWM Configuration files. Forked from the amazing work of Arkboix ! I use these with CachyOS, but it is compatible with any Arch based distrubution.
 
 ## 🥭 Notable Features 🥭
 
-- Pastel TTY colors.
-- Changing Colors are easy!
 - Rofi app launcher
 - Simple designs
 - Keybindings widget
 - Waybar as top bar
-- Emacs support
-
+- 
 ## Screenshot
 
 Main Branch (*Grimy Grove*)
