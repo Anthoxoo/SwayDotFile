@@ -1,18 +1,29 @@
+# I took Arkboi X config file for most of what you will see,
+# Huge thanks to him
 # https://github.com/arkboix
 # Sway WM Configuration File
-# AUTHOR: Arkboi X
+# ORIGINAL AUTHOR: Arkboi X
 # CREDIT: https://github.com/arkboix
 
-### Variables
-#
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
 
-# Home row direction keys, like vim
 set $left h
 set $down j
 set $up k
 set $right l
+
+
+# Azerty keyboard layout
+input * {
+    xkb_layout fr
+}
+#Screens duplicate
+output eDP-1 mode 1920x1080@60Hz position 0,0
+output HDMI-A-2 mode 1920x1080@120Hz position 0,0
+
+#Bluethooth
+exec_always blueman-applet
 
 # Your preferred terminal emulator
 set $term kitty
@@ -23,52 +34,46 @@ set $menu rofi -show drun
 # File Manager
 set $file-manager nemo
 
-
-
 # For settings firefox as your browser, you could replace the browser line with this:
 # set $web-browser firefox
 # And same goes for any browser, just replace the command with whatever command is used to launch your browser.
 # Brave browser users need to set command as brave-bin
 # Your preferred Browser
-set $web-browser floorp
+set $web-browser zen-browser
 
 # lock screen
 set $lock 'swaylock \
-    --color 2d353b \
-    --inside-color 3a454a \
-    --inside-clear-color 5c6a72 \
-    --inside-ver-color 5a524c \
-    --inside-wrong-color 543a3a \
-    --ring-color 7a8478 \
-    --ring-clear-color a7c080 \
-    --ring-ver-color dbbc7f \
-    --ring-wrong-color e67e80 \
-    --key-hl-color d699b6 \
-    --bs-hl-color e69875 \
-    --separator-color 2d353b \
-    --text-color d3c6aa \
-    --text-clear-color d3c6aa \
-    --text-ver-color d3c6aa \
-    --text-wrong-color d3c6aa \
+    --screenshots \
+    --clock \
+    --indicator \
     --indicator-radius 100 \
-    --indicator-thickness 10 \
+    --indicator-thickness 7 \
+    --ring-color #7fbbb3 \
+    --ring-clear-color #a7c080 \
+    --ring-ver-color #dbbc7f \
+    --ring-wrong-color #fb4934 \
+    --inside-color #2d353b \
+    --inside-clear-color #343f44 \
+    --inside-ver-color #343f44 \
+    --inside-wrong-color #343f44 \
+    --line-color 00000000 \
+    --separator-color #2d353b \
+    --text-color #d3c6aa \
+    --text-clear-color #d3c6aa \
+    --text-ver-color #d3c6aa \
+    --text-wrong-color #d3c6aa \
+    --grace 2 \
+    --fade-in 0.3 \
+    --effect-blur 5x5 \
+    --effect-scale 0.5 \
     --font "Iosevka Nerd Font Mono"'
-
-### OBS Fixes and XDG Desktop
 
 # Set XDG_CURRENT_DESKTOP for proper Wayland support
 exec --no-startup-id dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
-
 # Start xdg-desktop-portal services (ensure wlr starts first)
 exec --no-startup-id /usr/lib/xdg-desktop-portal-wlr &
 exec --no-startup-id /usr/lib/xdg-desktop-portal -r
-
-
-
-### Sov
-
-exec rm -f /tmp/sovpipe && mkfifo /tmp/sovpipe && tail -f /tmp/sovpipe | sov -t 500
 
 ### Colorscheme
 
@@ -108,17 +113,9 @@ set $cyan   #8ec07c
 set $white  #ebdbb2
 set $orange #fe8019
 
-
-
-### Output configuration
-#
-#
-output HDMI-A-1 resolution 1920x1080 position 1920,0
-
-### Idle configuration
-#
+#Swaylock configuration
 exec swayidle -w \
-    timeout 300 'swaylock \
+    timeout 500 'swaylock \
         --color 2d353b \
         --inside-color 3a454a \
         --inside-clear-color 5c6a72 \
@@ -143,8 +140,8 @@ exec swayidle -w \
     before-sleep 'swaylock -f -c 000000'
 
 
-# This will lock your screen after 300 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
+# This will lock your screen after 500 seconds of inactivity, then turn off
+# your displays after another 500 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
 
 ### Font Configuration
@@ -152,20 +149,8 @@ exec swayidle -w \
 font pango:Iosevka Nerd Font Mono 12
 
 ### Autostart
-
-
 ## Sway Automatic Tiling
-exec autotiling -l 2
-
-## Flameshot
-exec flameshot
-
-## Emacs Daemon
-exec /usr/bin/emacs --daemon
-
-## Clipboard
-exec wl-paste --type text --watch cliphist store &
-exec wl-paste --type image --watch cliphist store &
+exec_always autotiling -l 2
 
 # NetworkManager
 exec nm-applet
@@ -177,28 +162,22 @@ exec waybar
 exec swww-daemon
 
 ## SWWW Random Wallpaper
-exec bash -c 'swww img "$(find ~/wallpapers-extra/flowers -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.webp" \) | shuf -n1)" -t none'
-
+exec bash -c 'swww img "$(find ~/wallpapers -type f \( -iname "*.png" -o -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.webp" \) | shuf -n1)" -t none'
 
 ## Mako Notification
 exec mako
 
-## NWG Wrapper keybinds
-exec nwg-wrapper -t sway.pango -p right -mr 10
-exec nwg-wrapper -s quick.sh -a end -p left -ml 10 -mb 10 -r 60
-exec nwg-wrapper -s quote.sh -p left -a end -mb 10 -ml 260
-
 ## Autostart Applications
 
-exec swaymsg "workspace 1; exec floorp"
-exec swaymsg "workspace 3; exec kitty"
-
+#exec swaymsg "workspace 1; exec obsidian"
+exec swaymsg "workspace 2; exec kitty"
+exec swaymsg "workspace 3; exec zen-browser"
 
 ### Window Rules
 
 for_window [app_id="yad"] floating enable
 for_window [app_id="org.pulseaudio.pavucontrol"] floating enable, move position center, resize set 600 400
-
+for_window [title="Brightnessctl GUI"] floating enable, move position center, resize set 325 150
 
 ### Key bindings
 #
@@ -207,40 +186,38 @@ for_window [app_id="org.pulseaudio.pavucontrol"] floating enable, move position 
     # Start a terminal
     bindsym $mod+Return exec $term
 
-    # Start Emacs
-    bindsym $mod+e exec emacsclient -c
+    # Start Vscode
+    bindsym $mod+v exec code
 
     # Sticky Mode
     bindsym $mod+a exec sticky enable
 
     # Clipboard
-    bindsym $mod+v exec cliphist list | rofi -dmenu -p "Clipboard" -theme ~/.config/rofi/clipboard.rasi | cliphist decode | wl-copy
+    bindsym $mod+y exec cliphist list | rofi -dmenu -p "Clipboard" -theme ~/.config/rofi/clipboard.rasi | cliphist decode | wl-copy
 
-    # Emoji Picker
-    bindsym $mod+s exec rofi -show emoji -modi emoji -matching regex -sorting-method levenshtein
-
+    # Obsidian
+    bindsym $mod+s exec obsidian
 
     # Lock
-    bindsym $mod+shift+t exec $lock
+    bindsym $mod+alt+l exec $lock
 
     # Tiling Modes
     bindsym $mod+u exec ~/.config/sway/scripts/tiling.sh
-
-    # Screen Record
-    bindsym $mod+g exec ~/.config/sway/scripts/prompt-record.sh
-
+    
     # File Manager
-    bindsym $mod+y exec $file-manager
+    bindsym $mod+e exec $file-manager
 
 # Reload Waybar
     bindsym $mod+shift+a exec pkill -SIGUSR2 waybar
 
     # Call the browser variable and launch it with $mod+b
-    bindsym $mod+b exec $web-browser
+    bindsym $mod+b exec zen-browser
 
     # Kill focused window
     bindsym $mod+w kill
 
+    #Shutdown shortcut
+    bindsym $mod+alt+p exec shutdown now
 
     # Wallpaper
     bindsym $mod+c exec ~/.config/sway/scripts/wallpaper.sh
@@ -293,39 +270,50 @@ for_window [app_id="org.pulseaudio.pavucontrol"] floating enable, move position 
 #
 # Workspaces:
 #
-bindsym --no-repeat $mod+1 workspace number 1; exec "echo 1 > /tmp/sovpipe"
-bindsym --no-repeat $mod+2 workspace number 2; exec "echo 1 > /tmp/sovpipe"
-bindsym --no-repeat $mod+3 workspace number 3; exec "echo 1 > /tmp/sovpipe"
-bindsym --no-repeat $mod+4 workspace number 4; exec "echo 1 > /tmp/sovpipe"
-bindsym --no-repeat $mod+5 workspace number 5; exec "echo 1 > /tmp/sovpipe"
-bindsym --no-repeat $mod+6 workspace number 6; exec "echo 1 > /tmp/sovpipe"
-bindsym --no-repeat $mod+7 workspace number 7; exec "echo 1 > /tmp/sovpipe"
-bindsym --no-repeat $mod+8 workspace number 8; exec "echo 1 > /tmp/sovpipe"
-bindsym --no-repeat $mod+9 workspace number 9; exec "echo 1 > /tmp/sovpipe"
-bindsym --no-repeat $mod+0 workspace number 10; exec "echo 1 > /tmp/sovpipe"
+#bindsym --no-repeat $mod+1 workspace number 1; exec "echo 1 > /tmp/sovpipe"
+#bindsym --no-repeat $mod+2 workspace number 2; exec "echo 1 > /tmp/sovpipe"
+#bindsym --no-repeat $mod+3 workspace number 3; exec "echo 1 > /tmp/sovpipe"
+#bindsym --no-repeat $mod+4 workspace number 4; exec "echo 1 > /tmp/sovpipe"
+#bindsym --no-repeat $mod+5 workspace number 5; exec "echo 1 > /tmp/sovpipe"
+#bindsym --no-repeat $mod+6 workspace number 6; exec "echo 1 > /tmp/sovpipe"
+#bindsym --no-repeat $mod+7 workspace number 7; exec "echo 1 > /tmp/sovpipe"
+#bindsym --no-repeat $mod+8 workspace number 8; exec "echo 1 > /tmp/sovpipe"
+#bindsym --no-repeat $mod+9 workspace number 9; exec "echo 1 > /tmp/sovpipe"
+#bindsym --no-repeat $mod+0 workspace number 10; exec "echo 1 > /tmp/sovpipe"
 
-bindsym --release $mod+1 exec "echo 0 > /tmp/sovpipe"
-bindsym --release $mod+2 exec "echo 0 > /tmp/sovpipe"
-bindsym --release $mod+3 exec "echo 0 > /tmp/sovpipe"
-bindsym --release $mod+4 exec "echo 0 > /tmp/sovpipe"
-bindsym --release $mod+5 exec "echo 0 > /tmp/sovpipe"
-bindsym --release $mod+6 exec "echo 0 > /tmp/sovpipe"
-bindsym --release $mod+7 exec "echo 0 > /tmp/sovpipe"
-bindsym --release $mod+8 exec "echo 0 > /tmp/sovpipe"
-bindsym --release $mod+9 exec "echo 0 > /tmp/sovpipe"
-bindsym --release $mod+0 exec "echo 0 > /tmp/sovpipe"
+#bindsym --release $mod+1 exec "echo 0 > /tmp/sovpipe"
+#bindsym --release $mod+2 exec "echo 0 > /tmp/sovpipe"
+#bindsym --release $mod+3 exec "echo 0 > /tmp/sovpipe"
+#bindsym --release $mod+4 exec "echo 0 > /tmp/sovpipe"
+#bindsym --release $mod+5 exec "echo 0 > /tmp/sovpipe"
+#bindsym --release $mod+6 exec "echo 0 > /tmp/sovpipe"
+#bindsym --release $mod+7 exec "echo 0 > /tmp/sovpipe"
+#bindsym --release $mod+8 exec "echo 0 > /tmp/sovpipe"ndsym --release $mod+9 exec "echo 0 > /tmp/sovpipe"
+#bindsym --release $mod+0 exec "echo 0 > /tmp/sovpipe"
+
+bindsym $mod+ampersand workspace 1
+bindsym $mod+eacute workspace 2
+bindsym $mod+quotedbl workspace 3
+bindsym $mod+apostrophe workspace 4
+bindsym $mod+parenleft workspace 5
+bindsym $mod+minus workspace 6
+bindsym $mod+egrave workspace 7
+bindsym $mod+underscore workspace 8
+bindsym $mod+ccedilla workspace 9
+bindsym $mod+agrave workspace 10
+
 
     # Move focused container to workspace
-    bindsym $mod+Shift+1 move container to workspace number 1
-    bindsym $mod+Shift+2 move container to workspace number 2
-    bindsym $mod+Shift+3 move container to workspace number 3
-    bindsym $mod+Shift+4 move container to workspace number 4
-    bindsym $mod+Shift+5 move container to workspace number 5
-    bindsym $mod+Shift+6 move container to workspace number 6
-    bindsym $mod+Shift+7 move container to workspace number 7
-    bindsym $mod+Shift+8 move container to workspace number 8
-    bindsym $mod+Shift+9 move container to workspace number 9
-    bindsym $mod+Shift+0 move container to workspace number 10
+    bindsym $mod+Shift+ampersand move container to workspace number 1
+    bindsym $mod+Shift+eacute move container to workspace number 2
+    bindsym $mod+Shift+quotedbl move container to workspace number 3
+    bindsym $mod+Shift+apostrophe move container to workspace number 4
+    bindsym $mod+Shift+parenleft move container to workspace number 5
+    bindsym $mod+Shift+egrave move container to workspace number 6
+    bindsym $mod+Shift+minus move container to workspace number 7
+    bindsym $mod+Shift+underscore move container to workspace number 8
+    bindsym $mod+Shift+ccedilla move container to workspace number 9
+    bindsym $mod+Shift+agrave move container to workspace number 10
 
 
 # Note: workspaces can have any name you want, not just numbers.
@@ -360,11 +348,11 @@ bindsym --release $mod+0 exec "echo 0 > /tmp/sovpipe"
     # You can send windows there and get them back later.
 
     # Move the currently focused window to the scratchpad
-    bindsym $mod+Shift+minus move scratchpad
+    # bindsym $mod+Shift+minus move scratchpad
 
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
-    bindsym $mod+minus scratchpad show
+    bindsym $mod+plus scratchpad show
 #
 # Resizing containers:
 #
